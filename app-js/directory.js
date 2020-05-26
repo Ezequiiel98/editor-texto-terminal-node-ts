@@ -47,8 +47,9 @@ var Directory = /** @class */ (function () {
     Directory.prototype.getFilesInDir = function () {
         var files = fs.readdirSync(this._path);
         console.log("*Ubication: " + this.getShortPath());
-        files.forEach(function (file) { return console.log(file); });
+        process.stdout.write("\n  FILES:\n");
+        files.forEach(function (file) { return console.log("\t |- " + file); });
     };
     return Directory;
 }());
-module.exports = Directory;
+exports.default = Directory;

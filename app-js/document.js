@@ -31,17 +31,17 @@ var Document = /** @class */ (function () {
     Document.prototype.exist = function (name) {
         return fs.existsSync(this._dir + "/" + name);
     };
-    Document.prototype.apprend = function (text) {
+    Document.prototype.append = function (text) {
         this._content += os.EOL + text;
         this._isSaved = false;
     };
     Document.prototype.saveAs = function (name) {
-        fs.writeFileSync(this._dir + "/" + name, this._content);
+        fs.writeFileSync(this._dir + "/" + name, this._content + "\n");
         this._isSaved = true;
         this._filename = name;
     };
     Document.prototype.save = function () {
-        fs.writeFileSync(this._dir + "/" + this._filename, this._content);
+        fs.writeFileSync(this._dir + "/" + this._filename, this._content + "\n");
         this._isSaved = true;
         this._filename = this._filename;
     };
@@ -65,4 +65,4 @@ var Document = /** @class */ (function () {
     };
     return Document;
 }());
-module.exports = Document;
+exports.default = Document;

@@ -37,7 +37,8 @@ class Directory {
    const files = fs.readdirSync(this._path);
    
    console.log(`*Ubication: ${this.getShortPath()}`)
-   files.forEach(file => console.log(file)) 
+   process.stdout.write(`\n  FILES:\n`);
+   files.forEach(file => console.log(`\t |- ${file}`)) 
   }
 }
 
