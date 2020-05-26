@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var messages = {
     fileSaved: 'File saved successfully',
     fileNotSaves: 'The file was not saved, you can edit it',
@@ -6,4 +7,4 @@ var messages = {
     fileNotFount: 'The file doesnt exist',
     fileExists: 'The file  already exists'
 };
-module.exports = messages;
+exports.default = messages;

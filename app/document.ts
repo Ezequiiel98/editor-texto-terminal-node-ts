@@ -61,4 +61,4 @@ class Document{
   }
 }
 
-module.exports = Document;
+export default Document;

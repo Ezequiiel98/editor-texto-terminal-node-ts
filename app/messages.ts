@@ -14,4 +14,4 @@ const messages: Messages = {
   fileExists: 'The file  already exists'
 }
 
-module.exports = messages;
+export default messages;
