@@ -32,6 +32,7 @@ function saveAs(file: Document) {
 
     if (file.exist(name)) {
       console.log(Mesagges.fileExists, name, 'pepe');
+      /* question replace name */
       myInterface.question(Mesagges.replaceFileName, (res) => {
         if (res === 'y') {
           file.saveAs(name);
@@ -101,7 +102,7 @@ function openFileInterface() {
   dir.getFilesInDir();
   // eslint-disable-next-line consistent-return
   myInterface.question(Mesagges.requestFileName, (name:string) => {
-    if (!!name && file.exist(name)) return openFile(file, name);
+    if (name && file.exist(name)) return openFile(file, name);
 
     console.log(Mesagges.fileNotFount);
     setTimeout(() => {

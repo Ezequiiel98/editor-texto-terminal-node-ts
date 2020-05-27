@@ -51,6 +51,7 @@ function saveAs(file) {
             return renderInterface(file, messages_1.default.fileNotSaved);
         if (file.exist(name)) {
             console.log(messages_1.default.fileExists, name, 'pepe');
+            /* question replace name */
             myInterface.question(messages_1.default.replaceFileName, function (res) {
                 if (res === 'y') {
                     file.saveAs(name);
@@ -114,7 +115,7 @@ function openFileInterface() {
     dir.getFilesInDir();
     // eslint-disable-next-line consistent-return
     myInterface.question(messages_1.default.requestFileName, function (name) {
-        if (!!name && file.exist(name))
+        if (name && file.exist(name))
             return openFile(file, name);
         console.log(messages_1.default.fileNotFount);
         setTimeout(function () {
