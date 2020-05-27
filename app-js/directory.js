@@ -29,11 +29,11 @@ var Directory = /** @class */ (function () {
     }
     Directory.prototype.createDirectory = function () {
         this._path = path.join(this._path, this._nameDir);
-        if (fs.existsSync(this._nameDir)) {
+        if (fs.existsSync(this._path)) {
             console.log('The directory already exists');
         }
         else {
-            fs.mkdirSync(this._nameDir);
+            fs.mkdirSync(this._path);
         }
     };
     Directory.prototype.getPath = function () {
@@ -47,8 +47,8 @@ var Directory = /** @class */ (function () {
     Directory.prototype.getFilesInDir = function () {
         var files = fs.readdirSync(this._path);
         console.log("*Ubication: " + this.getShortPath());
-        process.stdout.write("\n  FILES:\n");
-        files.forEach(function (file) { return console.log("\t |- " + file); });
+        process.stdout.write('\n\tFILES\n');
+        files.forEach(function (file, index) { return console.log("\t" + ((files.length - 1) === index ? '└─' : '├─') + " " + file); });
     };
     return Directory;
 }());

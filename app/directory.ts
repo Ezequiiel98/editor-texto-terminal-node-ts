@@ -1,44 +1,44 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-
 class Directory {
   private _path: string;
+
   private _nameDir: string;
 
-  constructor(){
+  constructor() {
     this._path = __dirname;
     this._nameDir = 'docs';
     this.createDirectory();
   }
-   
-  private createDirectory(){
-    this._path = path.join(this._path, this._nameDir)
-    
-    if(fs.existsSync(this._nameDir)){
+
+  createDirectory(): void{
+    this._path = path.join(this._path, this._nameDir);
+
+    if (fs.existsSync(this._path)) {
       console.log('The directory already exists');
-    } else{
-      fs.mkdirSync(this._nameDir);
+    } else {
+      fs.mkdirSync(this._path);
     }
   }
 
-  getPath(): string{
+  getPath(): string {
     return this._path;
   }
 
-  getShortPath(): string{
+  getShortPath(): string {
     const paths = path.parse(this._path);
-    let delimiter: string = (paths.dir.indexOf('/') < 0  ) ? '\\' : '/' ;
-     
+    const delimiter: string = (paths.dir.indexOf('/') < 0) ? '\\' : '/';
+
     return `${paths.root}...${delimiter}${paths.name}`;
   }
-  
+
   getFilesInDir(): void{
-   const files = fs.readdirSync(this._path);
-   
-   console.log(`*Ubication: ${this.getShortPath()}`)
-   process.stdout.write(`\n  FILES:\n`);
-   files.forEach(file => console.log(`\t |- ${file}`)) 
+    const files = fs.readdirSync(this._path);
+
+    console.log(`*Ubication: ${this.getShortPath()}`);
+    process.stdout.write('\n\tFILES\n');
+    files.forEach((file, index) => console.log(`\t${(files.length - 1) === index ? '└─' : '├─'} ${file}`));
   }
 }
 

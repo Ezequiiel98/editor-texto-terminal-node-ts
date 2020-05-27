@@ -43,7 +43,6 @@ var Document = /** @class */ (function () {
     Document.prototype.save = function () {
         fs.writeFileSync(this._dir + "/" + this._filename, this._content + "\n");
         this._isSaved = true;
-        this._filename = this._filename;
     };
     Document.prototype.getContent = function () {
         return this._content;
