@@ -38,6 +38,9 @@ class Directory {
 
     console.log(`*Ubication: ${this.getShortPath()}`);
     process.stdout.write('\n\tFILES\n');
+
+    if (files.length <= 0) console.log('\t Directory is empty');
+
     files.forEach((file, index) => console.log(`\t${(files.length - 1) === index ? '└─' : '├─'} ${file}`));
   }
 }

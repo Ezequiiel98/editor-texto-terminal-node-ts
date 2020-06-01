@@ -7,5 +7,6 @@ var Messages = {
     fileNotFount: 'The file doesnt exist',
     fileExists: 'The file  already exists',
     replaceFileName: 'Do you want to replace the file name? (y/n) ',
+    fileDelete: 'The file deleted successfully',
 };
 exports.default = Messages;

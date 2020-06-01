@@ -1,12 +1,13 @@
 import * as readline from 'readline';
 
-import Mesagges from './messages';
+import Messages from './messages';
 import Directory from './directory';
 import Document from './document';
 
 const dir = new Directory();
 const tools = 'Command: :q! = exit, :w = save as, :x! = save';
-const screen = 'Text Editor\nChoose an option:\n 1) Create a new file\n 2) Open file \n 3) Close editor\n';
+const screen = 'Text Editor\nChoose an option:\n 1) Create a new file\n 2) Open file \n 3) Remove file\n 4) Close editor\n\n ';
+
 const myInterface = readline.createInterface(process.stdin, process.stdout);
 
 function renderInterface(file: Document, message: string) {
@@ -27,23 +28,22 @@ function renderInterface(file: Document, message: string) {
 
 function saveAs(file: Document) {
   // eslint-disable-next-line consistent-return
-  myInterface.question(Mesagges.requestFileName, (name: string) => {
-    if (!name) return renderInterface(file, Mesagges.fileNotSaved);
+  myInterface.question(Messages.requestFileName, (name: string) => {
+    if (!name) return renderInterface(file, Messages.fileNotSaved);
 
     if (file.exist(name)) {
-      console.log(Mesagges.fileExists, name, 'pepe');
       /* question replace name */
-      myInterface.question(Mesagges.replaceFileName, (res) => {
+      myInterface.question(Messages.replaceFileName, (res: string) => {
         if (res === 'y') {
           file.saveAs(name);
-          renderInterface(file, Mesagges.fileSaved);
+          renderInterface(file, Messages.fileSaved);
         } else {
-          renderInterface(file, Mesagges.fileNotSaved);
+          renderInterface(file, Messages.fileNotSaved);
         }
       });
     } else {
       file.saveAs(name);
-      renderInterface(file, Mesagges.fileSaved);
+      renderInterface(file, Messages.fileSaved);
     }
   });
 }
@@ -53,12 +53,13 @@ function save(file: Document) {
 
   if (hasName) {
     file.save();
-    renderInterface(file, Mesagges.fileSaved);
+    renderInterface(file, Messages.fileSaved);
   } else {
-    myInterface.question(Mesagges.requestFileName, (name = 'untitle') => {
+    myInterface.question(Messages.requestFileName, (name: string) => {
+      if (!name) return save(file);
       file.saveAs(name);
+      renderInterface(file, Messages.fileSaved);
     });
-    renderInterface(file, Mesagges.fileSaved);
   }
 }
 
@@ -96,22 +97,27 @@ function openFile(file: Document, name: string) {
   readCommands(file);
 }
 
-function openFileInterface() {
+function removeFile(file: Document, name: string) {
+  file.remove(name);
+  console.log(Messages.fileDelete);
+  mainScreen();
+}
+
+function showFilesInDir(callback: (file: Document, name: string) => void) {
   const file: Document = new Document(dir.getPath());
 
   dir.getFilesInDir();
   // eslint-disable-next-line consistent-return
-  myInterface.question(Mesagges.requestFileName, (name:string) => {
-    if (name && file.exist(name)) return openFile(file, name);
+  myInterface.question(`\n${Messages.requestFileName}`, (name:string) => {
+    if (name && file.exist(name)) return callback(file, name);
 
-    console.log(Mesagges.fileNotFount);
+    console.log(Messages.fileNotFount);
     setTimeout(() => {
       myInterface.removeAllListeners('line');
       mainScreen();
     }, 1500);
   });
 }
-
 
 function mainScreen() {
   /* clear screen */
@@ -124,10 +130,14 @@ function mainScreen() {
         break;
 
       case '2':
-        openFileInterface();
+        showFilesInDir(openFile);
         break;
 
       case '3':
+        showFilesInDir(removeFile);
+        break;
+
+      case '4':
         myInterface.close();
         break;
 

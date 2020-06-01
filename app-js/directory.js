@@ -48,6 +48,8 @@ var Directory = /** @class */ (function () {
         var files = fs.readdirSync(this._path);
         console.log("*Ubication: " + this.getShortPath());
         process.stdout.write('\n\tFILES\n');
+        if (files.length <= 0)
+            console.log('\t Directory is empty');
         files.forEach(function (file, index) { return console.log("\t" + ((files.length - 1) === index ? '└─' : '├─') + " " + file); });
     };
     return Directory;

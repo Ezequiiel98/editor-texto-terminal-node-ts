@@ -21,19 +21,20 @@ class Document {
     return fs.existsSync(`${this._dir}/${name}`);
   }
 
-  append(text: string): void{
+  append(text: string): void {
+    // EOL end-of-line
     this._content += os.EOL + text;
     this._isSaved = false;
   }
 
-  saveAs(name: string): void{
+  saveAs(name: string): void {
     fs.writeFileSync(`${this._dir}/${name}`, `${this._content}\n`);
 
     this._isSaved = true;
     this._filename = name;
   }
 
-  save(): void{
+  save(): void {
     fs.writeFileSync(`${this._dir}/${this._filename}`, `${this._content}\n`);
 
     this._isSaved = true;
@@ -60,6 +61,12 @@ class Document {
     this._filename = name;
     this._isSaved = true;
     return this._content;
+  }
+
+  remove(name: string): void {
+    fs.unlink(`${this._dir}/${name}`, (err) => {
+      if (err) throw err;
+    });
   }
 }
 

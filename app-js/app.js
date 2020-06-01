@@ -28,7 +28,7 @@ var directory_1 = __importDefault(require("./directory"));
 var document_1 = __importDefault(require("./document"));
 var dir = new directory_1.default();
 var tools = 'Command: :q! = exit, :w = save as, :x! = save';
-var screen = 'Text Editor\nChoose an option:\n 1) Create a new file\n 2) Open file \n 3) Close editor\n';
+var screen = 'Text Editor\nChoose an option:\n 1) Create a new file\n 2) Open file \n 3) Remove file\n 4) Close editor\n\n ';
 var myInterface = readline.createInterface(process.stdin, process.stdout);
 function renderInterface(file, message) {
     /* clear screen */
@@ -50,7 +50,6 @@ function saveAs(file) {
         if (!name)
             return renderInterface(file, messages_1.default.fileNotSaved);
         if (file.exist(name)) {
-            console.log(messages_1.default.fileExists, name, 'pepe');
             /* question replace name */
             myInterface.question(messages_1.default.replaceFileName, function (res) {
                 if (res === 'y') {
@@ -76,10 +75,11 @@ function save(file) {
     }
     else {
         myInterface.question(messages_1.default.requestFileName, function (name) {
-            if (name === void 0) { name = 'untitle'; }
+            if (!name)
+                return save(file);
             file.saveAs(name);
+            renderInterface(file, messages_1.default.fileSaved);
         });
-        renderInterface(file, messages_1.default.fileSaved);
     }
 }
 function readCommands(file) {
@@ -110,13 +110,18 @@ function openFile(file, name) {
     renderInterface(file, '');
     readCommands(file);
 }
-function openFileInterface() {
+function removeFile(file, name) {
+    file.remove(name);
+    console.log(messages_1.default.fileDelete);
+    mainScreen();
+}
+function showFilesInDir(callback) {
     var file = new document_1.default(dir.getPath());
     dir.getFilesInDir();
     // eslint-disable-next-line consistent-return
-    myInterface.question(messages_1.default.requestFileName, function (name) {
+    myInterface.question("\n" + messages_1.default.requestFileName, function (name) {
         if (name && file.exist(name))
-            return openFile(file, name);
+            return callback(file, name);
         console.log(messages_1.default.fileNotFount);
         setTimeout(function () {
             myInterface.removeAllListeners('line');
@@ -133,9 +138,12 @@ function mainScreen() {
                 createFile();
                 break;
             case '2':
-                openFileInterface();
+                showFilesInDir(openFile);
                 break;
             case '3':
+                showFilesInDir(removeFile);
+                break;
+            case '4':
                 myInterface.close();
                 break;
             default: mainScreen();

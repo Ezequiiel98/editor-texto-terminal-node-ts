@@ -32,6 +32,7 @@ var Document = /** @class */ (function () {
         return fs.existsSync(this._dir + "/" + name);
     };
     Document.prototype.append = function (text) {
+        // EOL end-of-line
         this._content += os.EOL + text;
         this._isSaved = false;
     };
@@ -61,6 +62,12 @@ var Document = /** @class */ (function () {
         this._filename = name;
         this._isSaved = true;
         return this._content;
+    };
+    Document.prototype.remove = function (name) {
+        fs.unlink(this._dir + "/" + name, function (err) {
+            if (err)
+                throw err;
+        });
     };
     return Document;
 }());

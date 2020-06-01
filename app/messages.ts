@@ -4,7 +4,8 @@ interface MessagesInterface {
   requestFileName: string,
   fileNotFount: string,
   fileExists: string,
-  replaceFileName: string
+  replaceFileName: string,
+  fileDelete: string
 }
 
 const Messages: MessagesInterface = {
@@ -14,6 +15,7 @@ const Messages: MessagesInterface = {
   fileNotFount: 'The file doesnt exist',
   fileExists: 'The file  already exists',
   replaceFileName: 'Do you want to replace the file name? (y/n) ',
+  fileDelete: 'The file deleted successfully',
 };
 
 export default Messages;
