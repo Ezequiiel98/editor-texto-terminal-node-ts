@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
 var os = __importStar(require("os"));
-var Document = /** @class */ (function () {
+var Document = (function () {
     function Document(dir) {
         this._content = '';
         this._isSaved = false;
@@ -32,7 +32,6 @@ var Document = /** @class */ (function () {
         return fs.existsSync(this._dir + "/" + name);
     };
     Document.prototype.append = function (text) {
-        // EOL end-of-line
         this._content += os.EOL + text;
         this._isSaved = false;
     };

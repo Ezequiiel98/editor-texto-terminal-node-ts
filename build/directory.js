@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
-var Directory = /** @class */ (function () {
+var Directory = (function () {
     function Directory() {
         this._path = __dirname;
         this._nameDir = 'docs';

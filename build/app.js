@@ -31,7 +31,6 @@ var tools = 'Command: :q! = exit, :w = save as, :x! = save';
 var screen = 'Text Editor\nChoose an option:\n 1) Create a new file\n 2) Open file \n 3) Remove file\n 4) Close editor\n\n ';
 var myInterface = readline.createInterface(process.stdin, process.stdout);
 function renderInterface(file, message) {
-    /* clear screen */
     process.stdout.write('\x1Bc');
     if (file.getName() === '') {
         console.log('File Untitled');
@@ -45,12 +44,10 @@ function renderInterface(file, message) {
     console.log(file.getContent());
 }
 function saveAs(file) {
-    // eslint-disable-next-line consistent-return
     myInterface.question(messages_1.default.requestFileName, function (name) {
         if (!name)
             return renderInterface(file, messages_1.default.fileNotSaved);
         if (file.exist(name)) {
-            /* question replace name */
             myInterface.question(messages_1.default.replaceFileName, function (res) {
                 if (res === 'y') {
                     file.saveAs(name);
@@ -118,7 +115,6 @@ function removeFile(file, name) {
 function showFilesInDir(callback) {
     var file = new document_1.default(dir.getPath());
     dir.getFilesInDir();
-    // eslint-disable-next-line consistent-return
     myInterface.question("\n" + messages_1.default.requestFileName, function (name) {
         if (name && file.exist(name))
             return callback(file, name);
@@ -130,7 +126,6 @@ function showFilesInDir(callback) {
     });
 }
 function mainScreen() {
-    /* clear screen */
     process.stdout.write('\x1Bc');
     myInterface.question(screen, function (res) {
         switch (res.trim()) {
