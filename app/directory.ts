@@ -38,7 +38,7 @@ class Directory {
   getFilesInDir(): void{
     const files = fs.readdirSync(this._path);
 
-    console.log(`\n* Ubication: ${this.getShortPath()}\n`, '\n\tFILES');
+    console.log(`\n* Location: ${this.getShortPath()}\n`, '\n\tFILES');
     if (files.length <= 0) console.log('\tDirectory is empty\n');
 
     files.forEach((file, index) => {
