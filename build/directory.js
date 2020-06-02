@@ -51,7 +51,10 @@ var Directory = (function () {
         console.log("\n* Ubication: " + this.getShortPath() + "\n", '\n\tFILES');
         if (files.length <= 0)
             console.log('\tDirectory is empty\n');
-        files.forEach(function (file, index) { return console.log("\t" + ((files.length - 1) === index ? '└─' : '├─') + " " + file); });
+        files.forEach(function (file, index) {
+            var line = (files.length - 1) === index ? '└─' : '├─';
+            console.log("\t" + line + " " + file);
+        });
     };
     return Directory;
 }());

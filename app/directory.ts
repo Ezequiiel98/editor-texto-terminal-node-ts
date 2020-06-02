@@ -39,10 +39,12 @@ class Directory {
     const files = fs.readdirSync(this._path);
 
     console.log(`\n* Ubication: ${this.getShortPath()}\n`, '\n\tFILES');
-
     if (files.length <= 0) console.log('\tDirectory is empty\n');
 
-    files.forEach((file, index) => console.log(`\t${(files.length - 1) === index ? '└─' : '├─'} ${file}`));
+    files.forEach((file, index) => {
+      const line: string = (files.length - 1) === index ? '└─' : '├─';
+      console.log(`\t${line} ${file}`);
+    });
   }
 }
 
