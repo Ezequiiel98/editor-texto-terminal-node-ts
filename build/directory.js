@@ -24,7 +24,7 @@ var path = __importStar(require("path"));
 var Directory = (function () {
     function Directory() {
         this._path = __dirname;
-        this._nameDir = 'docs';
+        this._nameDir = 'Documents';
         this.createDirectory();
     }
     Directory.prototype.createDirectory = function () {
@@ -41,15 +41,16 @@ var Directory = (function () {
     };
     Directory.prototype.getShortPath = function () {
         var paths = path.parse(this._path);
-        var delimiter = (paths.dir.indexOf('/') < 0) ? '\\' : '/';
-        return paths.root + "..." + delimiter + paths.name;
+        var delimiter = path.sep;
+        var dirs = paths.dir.split(delimiter);
+        var shortPath = path.join(dirs[dirs.length - 1], dirs[dirs.length - 2], paths.name);
+        return "." + delimiter + shortPath;
     };
     Directory.prototype.getFilesInDir = function () {
         var files = fs.readdirSync(this._path);
-        console.log("*Ubication: " + this.getShortPath());
-        process.stdout.write('\n\tFILES\n');
+        console.log("\n* Ubication: " + this.getShortPath() + "\n", '\n\tFILES');
         if (files.length <= 0)
-            console.log('\t Directory is empty');
+            console.log('\tDirectory is empty\n');
         files.forEach(function (file, index) { return console.log("\t" + ((files.length - 1) === index ? '└─' : '├─') + " " + file); });
     };
     return Directory;
